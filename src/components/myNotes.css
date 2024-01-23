@@ -6,15 +6,31 @@
     justify-content: space-between;
   }
   
+  .noteForm{
+    box-sizing: border-box;
+    border: 1px solid #ddd;
+    /* padding: 20px; */
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: relative; 
+  }
   .note-card {
-    width: calc(33.33% - 20px);
-    margin-bottom: 20px;
+    
+    width: auto;
+    margin-bottom: 40px;
     box-sizing: border-box;
     border: 1px solid #ddd;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    
   }
 
+  .deleteBtn{
+     background:blue; color:white; border-radius: 4px; position:absolute; bottom:0;
+     left:50%; transform: translateX(-50%); transition: transform 0.3s ease-in-out; 
+  } .deleteBtn:hover{
+transform: scale(1.2) translateX(-50%);
+  }
   
   

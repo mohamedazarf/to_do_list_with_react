@@ -42,13 +42,35 @@ const MyNotes = () => {
       });
   }, []);
 
+  const handleDeleteNote = (id) => {
+    axios.delete(`http://127.0.0.1:8000/deleteNote/${id}`)
+      .then((response) => {
+        // Handle success, e.g., remove the note from the state
+        setNotes((prevNotes) => prevNotes.filter((note) => note.id !== id));
+        console.log(response.data);
+      })
+      .catch((error) => {
+        // Handle error
+        console.error(error);
+      });
+  };
+
   return (
     <div className="notes-grid">
       {notes.map((note) => (
+      <form className='noteForm'> 
         <div key={note.id} className="note-card">
+          <h1>{note.id}</h1>
           <h2>{note.title}</h2>
           <p>{note.content}</p>
         </div>
+          <button type="button" class="deleteBtn" 
+          onClick={(e) => {
+            e.preventDefault(); // Prevent the default form submission
+          handleDeleteNote(note.id);
+          }}
+          >delete</button>
+        </form>
       ))}
     </div>
   );
