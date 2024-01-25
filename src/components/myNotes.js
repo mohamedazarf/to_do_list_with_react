@@ -5,6 +5,11 @@ import axios from 'axios';
 const MyNotes = () => {
   const [originalNotes, setOriginalNotes] = useState([]);
   const [filteredNotes, setFilteredNotes] = useState([]);
+  const [isModifyDialogOpen, setModifyDialogOpen] = useState(false);
+  const [selectedNote, setSelectedNote] = useState(null);
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
+
 
   useEffect(() => {
     axios.get('http://127.0.0.1:8000/allNotes/')
@@ -31,6 +36,26 @@ const MyNotes = () => {
         console.error(error);
       });
   };
+  
+  const modifyNote = async (e, id) => {
+    e.preventDefault();
+  
+    try {
+      console.log("Title:", title);
+      console.log("Content:", content);
+  
+      await axios.put(`http://127.0.0.1:8000/modifyNote/${id}/`, {
+        title,
+        content,
+      });
+  
+      console.log('Note modified successfully!');
+    } catch (error) {
+      console.error('Error modifying note:', error.response.data);
+    }
+  };
+  
+  
 
   const search = (e) => {
     const value = e.target.value.toLowerCase();
@@ -46,9 +71,20 @@ const MyNotes = () => {
       setFilteredNotes(filteredNotes);
     }
   };
+  const openModifyDialog = (note) => {
+    setSelectedNote(note);
+    setModifyDialogOpen(true);
+  };
+
+  const closeModifyDialog = () => {
+    setModifyDialogOpen(false);
+    setSelectedNote(null);
+  };
+
 
   return (
     <>
+    <div className={`overlay ${isModifyDialogOpen ? 'open' : ''}`}></div>
       <form>
         <input type="text" className="searchBar" placeholder="Search..." onChange={search} />
       </form>
@@ -71,7 +107,7 @@ const MyNotes = () => {
             <button
               type="button"
               className="modifyBtn"
-              // onClick={() => handleDeleteNote(note.id)}
+              onClick={() => openModifyDialog(note)}
             >
               modify
             </button>
@@ -79,6 +115,36 @@ const MyNotes = () => {
           </form>
         ))}
       </div>
+      <div className={`dialog ${isModifyDialogOpen ? 'open' : ''}`}>
+      <form className="dialog-content" >
+        <h2 style={{backgroundColor:'blue',color:"white",width:"100%" , textAlign:"center"}}>Modify Note</h2>
+        <label>Title:</label>
+        <input
+          type="text"
+          id="title"
+          name="title"
+          defaultValue={selectedNote? selectedNote.title : ''}
+          onChange={(e) => setTitle(e.target.value)}
+          required
+        />
+        
+        <label htmlFor="content">Content:</label>
+        <textarea
+          id="content"
+          name="content"
+          defaultValue={selectedNote? selectedNote.content : ''}
+          onChange={(e) => setContent(e.target.value)}
+          required
+        ></textarea>
+        <button type="submit" style={{backgroundColor:'blue',color:'white',padding:'0px 10px', margin:'5px 0'}}
+        onClick={(e) => modifyNote(e, selectedNote.id)}
+        >Save</button>
+        <button onClick={closeModifyDialog}
+        style={{backgroundColor:'red',color:'white',padding:'0px 10px'}}
+        >Cancel</button>
+      </form>
+    </div>
+      
     </>
   );
 };
