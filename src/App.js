@@ -7,10 +7,10 @@ import './App.css';
 const ConditionalRender = ({ setPageTitle }) => {
   const match = useMatch('/');
   if (match) {
-    setPageTitle('my notes');
+    setPageTitle('home');
     return <NavigateToMyNotesButton />;
   }
-  setPageTitle('home');
+  setPageTitle('my notes');
   return <NavigateToHomeButton />;
 };
 

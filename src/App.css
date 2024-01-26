@@ -6,6 +6,7 @@ body{
 }
 header{
  color:white;   width:100%; text-align:center; background-color: blue; height:50px; align-items: center;
+ margin-bottom: 20px;
 }
 .navigate{
     position:absolute; background-color:white; right:0; height: 50px; top:0;

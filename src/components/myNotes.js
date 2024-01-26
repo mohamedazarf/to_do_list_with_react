@@ -50,9 +50,14 @@ const MyNotes = () => {
       });
   
       console.log('Note modified successfully!');
+      const response = await axios.get('http://127.0.0.1:8000/allNotes/');
+      const updatedNotes = response.data.notes;
+      setOriginalNotes(updatedNotes);
+      setFilteredNotes(updatedNotes);
     } catch (error) {
       console.error('Error modifying note:', error.response.data);
     }
+    setModifyDialogOpen(false);
   };
   
   
@@ -85,18 +90,21 @@ const MyNotes = () => {
   return (
     <>
     <div className={`overlay ${isModifyDialogOpen ? 'open' : ''}`}></div>
-      <form>
+      <form className="searchForm">
         <input type="text" className="searchBar" placeholder="Search..." onChange={search} />
       </form>
       <div className="notes-grid">
-        {filteredNotes.map((note) => (
-          <form className='noteForm' key={note.id}>
-            <div className="note-card">
-              <h1>{note.id}</h1>
-              <h2>{note.title}</h2>
-              <p>{note.content}</p>
-            </div>
-            <div className='btns'>
+  {originalNotes.length === 0 ? (
+    <p>You haven't written any notes yet.</p>
+  ) : (
+    filteredNotes.length > 0 ? (
+      filteredNotes.map((note) => (
+        <form className='noteForm' key={note.id}>
+          <div className="note-card">
+            <h2 className='noteTitle'>{note.title}</h2>
+            <p>{note.content}</p>
+          </div>
+          <div className='btns'>
             <button
               type="button"
               className="deleteBtn"
@@ -111,10 +119,15 @@ const MyNotes = () => {
             >
               modify
             </button>
-            </div>
-          </form>
-        ))}
-      </div>
+          </div>
+        </form>
+      ))
+    ) : (
+      <p>No notes found for the given search query.</p>
+    )
+  )}
+</div>
+
       <div className={`dialog ${isModifyDialogOpen ? 'open' : ''}`}>
       <form className="dialog-content" >
         <h2 style={{backgroundColor:'blue',color:"white",width:"100%" , textAlign:"center"}}>Modify Note</h2>

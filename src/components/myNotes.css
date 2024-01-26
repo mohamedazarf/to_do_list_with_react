@@ -17,8 +17,7 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     position: relative; 
   }
-  .note-card {
-    
+  .note-card { 
     width: auto;
     margin-bottom: 40px;
     box-sizing: border-box;
@@ -26,8 +25,9 @@
     padding: 20px 30px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    
+    min-width: 150px;
   }
+  .noteTitle{border-bottom: 1px solid black; }
 
   .modifyBtn,.deleteBtn{
       color:white; border-radius: 4px; position:absolute; bottom:5px; padding:0 2px;

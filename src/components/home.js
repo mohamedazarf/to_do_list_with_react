@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-
+import './home.css';
 const Home = () => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
@@ -31,7 +31,7 @@ const Home = () => {
 
   return (
     <div>
-      <h1>Add Note Form</h1>
+      <h1>Add Note</h1>
       <form onSubmit={onSubmit}>
         <label htmlFor="title">Title:</label>
         <input

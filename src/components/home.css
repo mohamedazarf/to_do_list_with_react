@@ -1,22 +1,25 @@
 div{
     display: flex; flex-direction: column; justify-content: center;
-    align-items: center;
+    align-items: center; 
+    /* margin-top: 20px; */
 }
-form{
+form:not(.searchForm){
      width:300px; 
-    display: flex; border-top:1px solid ;border-bottom:1px solid ;
-    margin-bottom: 5px;
+    display: flex; flex-direction: column; justify-content: center;
+     border-top:1px solid ;border:1px solid ;
+    margin-bottom: 5px; padding:20px;
 }
 ul{
     border:1px solid; height:300px; width:300px;
 }
-input{flex:1}
+input,textarea{flex:1; border:1px solid ; margin-bottom: 5px; }
 .button {
+    color:white;
     border: none;
     outline: none;
     padding: 10px 20px;
     cursor: pointer;
     font-size: 16px;
     border-radius: 5px;
-    background-color:yellow;
+    background-color:blue;
   }
